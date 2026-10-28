@@ -1,0 +1,240 @@
+## 3.3.2 (2025-08-02)
+### Fixed
+- fix strength reduction not working when using only depth limit
+- fix missing cases in command line parameters testing
+### Added
+- add emscripten support
+- disable clearing hashtable using multiple threads with emscripten
+- disable logfile with emscripten
+- disable openingbook, personalities and tablebases with emscripten
+- reduce max threads and max hash size with emscripten
+### Changed
+- increase maximum multipv to 256
+## 3.3.1 (2025-07-12)
+### Fixed
+- fix EngineStrength parameter not working in version 3.3.0
+- fix initialization of fixed depth search
+- don't stop search by nodes before finishing depth 1
+- revert changes to kpk bitbases because initialization was using too much stack
+- fix multipv not cleared before search
+- fix compilation warning in searchthread.cpp
+## 3.3.0 (2025-07-05)
+### Fixed
+- fix warning in fen parsing
+- simplifications in move ordering
+- fix compilation warnings
+- remove unused operator
+- fix thread initialization in tuner, don't stop on unknown game result for FEN
+- fix pawn storm evaluation, and psqt orientation, don't use negative term for pawn/king distance
+- fix check nodes initialization
+- SyzygyProbeLimit and SyzygyProbeDepth were inverted in config file
+- fix aspiration window limits, and pv initialization
+- fix depth search initialization in anlaysis benchmark and testsuite options
+- clear pv only when needed in ybwc, and remove commented code
+- update fathom
+- fix hashtable cleared twice at launch
+- fix uci lmr and null move pruning initialization
+- fix uci depth output for current move
+
+### Added
+- rewrite move parser, fen parser, add pgn parser and use it to select tuning positions
+- add a string_view tokenizer
+- add UCI searchmoves option
+- add analyze option in command line
+- and add UCI search mate option
+- change tuning command line parameters and add an option to play games and generate positions
+- enable tuner in CI
+- add stalemate in tuner playgames, and fix problems with random moves
+- add more tests on fen strings
+- add more tests on config and command line parameters
+- clear hashtable using multiple threads
+- add new uci option EngineLevel replacing UCI_Elo if used
+
+### Changed
+- change UCIinfo messages and simplify thread initialization
+- remove SearchMode to allow multiple search end conditions
+- don't stop search when a mate is found
+- use default constructor for ChessHashNode
+- simplifiactions in board
+- simplify ChessMoveSort
+- don't add best move in quiet searched move list for history
+- return value optimization in makeMove function
+- add emplace_back and front in ChessMoveSortList
+- generate Zobrist keys at compile time using XorShiftStar
+- generate kpk bitbases at launch
+- improve passed pawns evaluation
+
+## 3.2.1 (2024-02-03)
+### Fixed
+- fix initialization of UCI_LimitStrength
+- improve nodes and strength reduction, and use new UCI Elo levels
+
+### Added
+- add missing std::
+- use std:: for types from cinttypes
+- use inline constexpr for eval parameters, and use move value type in moveorder
+- use inline constexpr and staticconstexpr
+- use nodiscard
+- add a BitBoard scan function
+- add a bitfield class and use it for move and hash node
+
+### Changed
+- change some types, and special types for move, evalscore, bitbase, and hash
+  internal data
+- use Board::bitboardPieceType
+- use default member initialization for board and engine
+- don't keep white psqt and outpost in memory
+- simplification in movegen
+
+## 3.2.0 (2023-12-09)
+### Fixed
+- fix precision when saving tuning variables in text file
+- fix some clang tidy warnings
+- fix enums in move.h to pass undefined sanitizer, and use prefix operator++
+- fix missing const in pv and moveorder
+- fix node type in YBWC split
+- fix thread variable name in lazysmp
+- fix best move update in iterative deepening
+- fix missing or unused includes
+- fix mersenne twister initialization
+- use const for lmr and lmp tables
+- remove special characters in config file lines
+- fix possible crashes in command line or config file, and simplifications 
+  in module.cpp
+- simplifications in evaluation, and fix a warning with bitboards in 32bit 
+  version
+- fix a draw detection problem
+
+### Added
+- add a function to simplify LMR table lookup
+- replace tablebase code by Fathom
+- new tuner using Gradient Descent
+- add new pawn shield and storm, bishop outpost, and passed pawns bonus by file
+- add more unit tests
+- add sanitizer options with cmake
+
+### Changed
+- replace most of #define by constexpr
+- use a reference for Tunable
+- don't access items by index in ConfigFile
+- generate mvv/lva table at compile time
+- move ChessSearchStack declaration in search.h
+- use a reference of ChessMoveSortList in ChessMoveOrder, and declare it in 
+  ChessSearchStack, to reduce stack memory usage and not zero initializing the 
+  move array in the search functions
+- create a structure for search data (repetition, search stack, and pv), and
+  declare it in thread to reduce stack memory usage
+- use std::thread, and remove thread.h/.cpp
+- use final on protocol classes
+- use a template with node type for search functions
+- rename evaluation parameters and use EvalScore for most of them, add a
+  function to generate parameters declaration in C++ code
+- Eval penality for pawns and trapped pieces are now negative numbers. Add 
+  new personality parameters : outpost, passed pawns, and pawn shield.
+- simplifications in evaluate, and change pawn shield evaluation
+- change endgame scaling and tempo
+- change LMR and LMP conditions
+- simplify move ordering code
+- use more std algorithms, and Move MaterialMask and move list in separate files
+- simplify bitboards, and calculate some arrays at compile time
+
+## 3.1.1 (2022-12-17)
+### Fixed (1 change)
+- fix a draw detection bug, havePawns function was not working in some cases, 
+  and add unit tests
+
+## 3.1.0 (2022-12-10)
+### Fixed (27 changes)
+- fix compilation of delta pruning option
+- fix quiescence checks define
+- fix compilation error for tuner
+- fix problem in File and Rank substraction operator
+- fix compilation of generate bitbase
+- fix tuner compilation
+- fix use of emplace_back
+- fix few problems after static analysis
+- fix compilation of tuner, fix FEN get function
+- fix problem in getNextMove, remove the while loop and add unit test
+- fix compilation and warnings for tuner and unit tests
+- fix command line parameters error with testsuite when filename is missing
+- fix compilation using HASH_STATS option
+- fix hashtable unit tests
+- fix warnings in fen.cpp
+- fix local variables names for pawn moves generation
+- fix some clang tidy warnings
+- fix time calculation in benchmark and testsuite
+- fix some warnings
+- fix msvc warning
+- fix return value in seaarchRoot when search stop
+- fix a data race in YBWC
+- fix some static analisis warnings
+- fix tablebase score, and revert a change in searchRoot
+- fix a warning with MSVC
+- fix a warning in logfile
+- fix warning when compiling with pext option
+
+### Added (13 changes)
+- add endgame value for free passed pawns and pieces material in evaluation
+- add tuner code
+- add enPassantSquare function
+- add constant for piece color offset
+- use a MaterialMask type and rewrite code to generate and count material
+- add gitlab ci
+- add bitboards functions for a more readable code
+- add unit tests stage in gitlab ci
+- add material endgame value in personality
+- add UCI option for LimitStrengthMode
+- add missing phase in moveorder copy
+- add endgame bishop pair value in personality, and fix default values
+- add more unit tests
+- add missing include in protocol
+
+### Changed (34 changes)
+- rewrite logfile code without using preprocessor
+- return move in getNextMove instead of phase
+- simplify getNextMove
+- use enum class for MoveOrderPhase
+- ChessHashNode::read is const
+- remove redundant public declaration
+- getDrawValue is const
+- use Piece,Square,Rank,File enums instead of int
+- rename ChessGamePhaseLimit and use type
+- replace flip_square table by a function
+- use type for std::pair in ConfigFile
+- use Piece instead of int
+- use getFirstSquare in evalKPK
+- simplify enum class names
+- simplify some #ifdef in search
+- simplify initCastlingRights
+- calcMateValue function is static
+- use Piece type in mirrorPSQT
+- use separate pieces values in move ordering
+- in moveorder, skip checks phase after evasion
+- replace mobility formula by tables, and add possibility to have knight 
+  outpost values for middle and end game
+- remove unused variables in eval
+- use EvalScore for passed pawns evaluation
+- use see material values in TestSEE unit test
+- simplify lazy smp code
+- change hash stats counters, and simplify getBestMove
+- change parameter order in updateSearch
+- use getBestMove in IID
+- change CastlingRight enum type
+- use endgame material value in endgame functions
+- remove unused function
+- use map::at when reading scores in findBestThread
+- don't use quiescence search to sort root moves
+- remove commented code
+- use Texel's tuning results in evaluation
+
+## 3.0.1 (2022-01-15)
+### Fixed (5 changes)
+- fix SMP mode initialization for more than 64 threads
+- fix FRC castling initialization in FEN parsing
+- fix best thread choice in Lazy SMP
+- fix uninitialized variables in benchmark
+- don't increase ply in the razoring search call
+
+## 3.0.0 (2021-12-18)
+- First release
+

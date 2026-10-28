@@ -1,0 +1,5 @@
+; Cheese 3.2 personality created from Lichess Elite database 2019 : https://database.nikonoel.fr/
+; from games between players rated 2400+ against players rated 2200+
+
+EvalData=personality/eval_lichess_2019.hce
+

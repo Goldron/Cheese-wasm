@@ -1,0 +1,46 @@
+; Cheese 3.0 personality
+
+; pieces material values
+PawnValueMid=100
+KnightValueMid=325
+BishopValueMid=325
+RookValueMid=500
+QueenValueMid=975
+
+PawnValueEnd=100
+KnightValueEnd=325
+BishopValueEnd=325
+RookValueEnd=500
+QueenValueEnd=975
+
+BishopPairMid=50
+BishopPairEnd=50
+
+PawnDoubledMid=-10
+PawnDoubledEnd=-20
+
+PawnIsolatedMid=-10
+PawnIsolatedEnd=-15
+
+PawnBackwardMid=-15
+PawnBackwardEnd=-15
+
+RookOpenFileMid=30
+RookOpenFileEnd=10
+
+RookSemiOpenFileMid=20
+RookSemiOpenFileEnd=10
+
+Rook7thRankMid=10
+Rook7thRankEnd=30
+
+; king safety percentage for own / opponent pieces (0..100)
+KingSafetyOwn=100
+KingSafetyOpp=100
+
+; mobility percentage for own / opponent pieces (0..100)
+MobilityOwn=100
+MobilityOpp=100
+
+; add randomness in evaluation (0..100)
+Randomness=0

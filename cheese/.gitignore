@@ -1,0 +1,17 @@
+*.bat
+libs/
+Testing/
+bin/*
+!bin/personality
+!bin/*.*
+bin/*.exe
+bin/*.txt
+bin/*.wasm
+bin/*.js
+!bin/personality/*.*
+bin/*.bat
+bin/Debug/
+bin/Release/
+bin/Testing/
+build*
+

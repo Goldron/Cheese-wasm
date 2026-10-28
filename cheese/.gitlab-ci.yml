@@ -1,0 +1,30 @@
+image: ubuntu:latest
+
+before_script:
+    - apt update && apt -y install build-essential cmake libgtest-dev
+
+stages:
+    - build
+    - test
+
+build:
+    stage: build
+    script:
+        - mkdir build
+        - cd build
+        - cmake .. -D"ENABLE_TESTING=ON" -D"ENABLE_TUNER=ON"
+        - cmake --build . --config Release
+    artifacts:
+        paths:
+            - bin/cheese_tests
+
+test:
+    stage: test
+    script:
+        - cd bin
+        - ./cheese_tests --gtest_output="xml:gtest.xml"
+    artifacts:
+        paths:
+            - bin/gtest.xml
+        expire_in: 1 week
+
